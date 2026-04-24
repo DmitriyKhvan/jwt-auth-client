@@ -37,6 +37,8 @@ $api.interceptors.response.use(
         });
       }
     }
+    // return Promise.reject(error); // ✅ ВОТ ЭТОГО НЕ ХВАТАЛО
+    throw error;
   }
 );
 

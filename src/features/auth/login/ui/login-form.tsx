@@ -4,8 +4,10 @@ import {
   useLoginError,
   useLoginLoading
 } from "@/features/auth/login/model/login-thunk";
+// import { useLogin } from "../model/use-login";
 
 export function LoginForm() {
+  // const { login, isLoading, loginError } = useLogin();
   const dispatch = useAppDispatch();
 
   const isLoading = useLoginLoading();
@@ -15,6 +17,12 @@ export function LoginForm() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
+    // login(
+    //   {
+    //     email: formData.get("login")?.toString() ?? "",
+    //     password: formData.get("password")?.toString() ?? ""
+    //   }
+    // );
     dispatch(
       loginThunk(
         formData.get("login")?.toString() ?? "",
