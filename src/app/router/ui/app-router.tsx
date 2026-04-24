@@ -90,6 +90,7 @@ import { UserAuth } from "../lib/user-auth";
 export const router = createBrowserRouter([
   {
     path: "/login",
+    HydrateFallback: () => <div>Loading...</div>,
     lazy: async () => {
       const module = await import("@/shared/layouts/ui/auth");
       return { Component: module.AuthLayout };
