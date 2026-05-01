@@ -6,5 +6,6 @@ export function useUsers() {
     ...userApi.getUsersQueryOptions(),
     select: data => data.data
   });
+
   return { users, isLoading, error };
 }
