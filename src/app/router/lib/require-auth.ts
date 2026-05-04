@@ -5,11 +5,10 @@ import { queryClient } from "@/shared/api/query-client";
 import type { AxiosError } from "axios";
 import { redirect } from "react-router";
 
-
 export async function requireAuth() {
   try {
     const { data } = await queryClient.fetchQuery({
-      ...authApi.checkAuthQueryOptions()
+      ...authApi.checkAuthQueryOptions(),
     });
 
     if (!data) {
@@ -21,8 +20,8 @@ export async function requireAuth() {
 
     return data;
   } catch (error) {
-    throw new Response('Not Authorized', { 
-      status: (error as AxiosError).response?.status
+    throw new Response("Not Authorized", {
+      status: (error as AxiosError).response?.status || 401,
     });
   }
 }

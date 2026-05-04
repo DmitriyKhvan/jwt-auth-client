@@ -1,10 +1,11 @@
 import clsx from "clsx";
+import type { HTMLAttributes } from "react";
 
 type UiButtonVariant = "primary" | "secondary" | "outlined";
 export type UiButtonProps = {
   variant: UiButtonVariant;
   disabled?: boolean;
-} & React.HTMLAttributes<HTMLButtonElement>;
+} & HTMLAttributes<HTMLButtonElement>;
 
 export function UiButton({ className, variant, ...props }: UiButtonProps) {
   return (
