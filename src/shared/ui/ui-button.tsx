@@ -3,6 +3,7 @@ import clsx from "clsx";
 type UiButtonVariant = "primary" | "secondary" | "outlined";
 export type UiButtonProps = {
   variant: UiButtonVariant;
+  disabled?: boolean;
 } & React.HTMLAttributes<HTMLButtonElement>;
 
 export function UiButton({ className, variant, ...props }: UiButtonProps) {
