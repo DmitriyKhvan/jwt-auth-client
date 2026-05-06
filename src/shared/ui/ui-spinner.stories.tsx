@@ -19,9 +19,7 @@ export default meta;
 type Story = StoryObj<typeof UiSpinner>;
 
 export const Default: Story = {
-  args: {
-    className: "",
-  },
+  args: {},
 };
 
 export const Small: Story = {

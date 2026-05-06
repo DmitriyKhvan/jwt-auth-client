@@ -14,6 +14,10 @@ const meta: Meta<typeof UiButton> = {
       options: ["primary", "secondary", "outlined"],
       description: "Вариант кнопки",
     },
+    className: {
+      control: "text",
+      description: "CSS классы для кастомизации",
+    },
     children: {
       control: "text",
       description: "Текст кнопки",

@@ -1,10 +1,12 @@
 import { extra } from "@/app/store";
 import {
   // Route,
-  createBrowserRouter
+  createBrowserRouter,
   // createRoutesFromElements
 } from "react-router";
 import { UserAuth } from "../lib/user-auth";
+import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
+import { ROUTES } from "@/shared/constants/routes";
 
 // export const router = createBrowserRouter(
 //   createRoutesFromElements([
@@ -89,36 +91,44 @@ import { UserAuth } from "../lib/user-auth";
 
 export const router = createBrowserRouter([
   {
-    path: "/login",
-    HydrateFallback: () => <div>Loading...</div>,
+    path: "/",
+    HydrateFallback: () => <UiPageSpinner />,
+
     lazy: async () => {
       const module = await import("@/shared/layouts/ui/auth");
       return { Component: module.AuthLayout };
     },
     children: [
       {
-        index: true,
+        path: ROUTES.SIGN_IN,
         lazy: async () => {
-          const module = await import("@/pages/login");
+          const module = await import("@/pages/sing-in");
           return { Component: module.LoginPage };
-        }
-      }
-    ]
+        },
+      },
+      {
+        path: ROUTES.SIGN_UP,
+        lazy: async () => {
+          const module = await import("@/pages/sign-up");
+          return { Component: module.SignUpPage };
+        },
+      },
+    ],
   },
 
   {
     path: "/",
-    HydrateFallback: () => <div>Loading...</div>,
+    HydrateFallback: () => <UiPageSpinner />,
     lazy: async () => {
       const [layout, error, require] = await Promise.all([
         import("@/shared/layouts/ui/main"),
         import("@/pages/error"),
-        import("@/app/router/lib/require-auth")
+        import("@/app/router/lib/require-auth"),
       ]);
       return {
         loader: require.requireAuth, // preloader data
         Component: layout.MainLayout, // main layout
-        ErrorBoundary: error.ErrorPage // error page
+        ErrorBoundary: error.ErrorPage, // error page
       };
     },
     children: [
@@ -127,17 +137,17 @@ export const router = createBrowserRouter([
         lazy: async () => {
           const module = await import("@/pages/home");
           return { Component: module.HomePage };
-        }
+        },
       },
       {
-        path: "about",
+        path: ROUTES.ABOUT,
         lazy: async () => {
           const module = await import("@/pages/about");
           return { Component: module.AboutPage };
-        }
+        },
       },
       {
-        path: "users",
+        path: ROUTES.USERS,
         lazy: async () => {
           const module = await import("@/pages/users");
           return {
@@ -145,26 +155,26 @@ export const router = createBrowserRouter([
               <UserAuth>
                 <module.UsersPage />
               </UserAuth>
-            )
+            ),
           };
-        }
+        },
       },
       {
-        path: "users/:id",
+        path: ROUTES.USER,
         lazy: async () => {
           const module = await import("@/pages/user");
           return { Component: module.UserPage };
-        }
+        },
       },
       {
         path: "*",
         lazy: async () => {
           const module = await import("@/pages/not-found");
           return { Component: module.NotFoundPage };
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 ]);
 
 extra.router = router;

@@ -1,8 +1,9 @@
+import { ROUTES } from "@/shared/constants/routes";
 import {
   Link,
   isRouteErrorResponse,
   useLocation,
-  useRouteError
+  useRouteError,
 } from "react-router";
 
 export const ErrorPage = () => {
@@ -23,7 +24,7 @@ export const ErrorPage = () => {
       return (
         <>
           <div>You aren't authorized to see this</div>
-          <Link to="/login" state={{ from: location.pathname }}>
+          <Link to={ROUTES.SIGN_IN} state={{ from: location.pathname }}>
             Login
           </Link>
         </>
