@@ -4,7 +4,6 @@ import {
   createBrowserRouter,
   // createRoutesFromElements
 } from "react-router";
-import { UserAuth } from "../lib/user-auth";
 import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
 import { ROUTES } from "@/shared/constants/routes";
 
@@ -149,12 +148,16 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.USERS,
         lazy: async () => {
-          const module = await import("@/pages/users");
+          const [component, require] = await Promise.all([
+            import("@/pages/users"),
+            import("@/app/router/lib/user-auth"),
+          ]);
+
           return {
             Component: () => (
-              <UserAuth>
-                <module.UsersPage />
-              </UserAuth>
+              <require.UserAuth>
+                <component.UsersPage />
+              </require.UserAuth>
             ),
           };
         },

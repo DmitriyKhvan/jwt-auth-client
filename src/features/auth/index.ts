@@ -1,4 +1,5 @@
-import { SingUpForm } from "./sign-up/ui/sign-up-form";
-import { SignInForm } from "./sign-in/ui/sign-in-form";
+import { SingUpForm } from "./ui/sign-up-form";
+import { SignInForm } from "./ui/sign-in-form";
+import { SignOutButton } from "./ui/sign-out-button";
 
-export { SingUpForm, SignInForm };
+export { SingUpForm, SignInForm, SignOutButton };

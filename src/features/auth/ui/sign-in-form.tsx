@@ -8,6 +8,8 @@ import {
   useSignInLoading,
 } from "../model/sign-in-thunk";
 import { useForm } from "react-hook-form";
+import { UiLink } from "@/shared/ui/ui-link";
+import { ROUTES } from "@/shared/constants/routes";
 
 export function SignInForm() {
   const { register, handleSubmit } = useForm<{
@@ -51,6 +53,9 @@ export function SignInForm() {
         <UiButton disabled={isLoading} variant="primary">
           Sign In
         </UiButton>
+        <UiLink className="text-center text-lime-500!" to={ROUTES.SIGN_UP}>
+          Sign Up
+        </UiLink>
       </form>
     </>
   );

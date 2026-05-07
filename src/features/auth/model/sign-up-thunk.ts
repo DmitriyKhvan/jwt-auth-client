@@ -1,23 +1,19 @@
 import { queryClient } from "@/shared/api/query-client";
 import type { AppThunk } from "@/shared/redux";
 import { MutationObserver, useMutationState } from "@tanstack/react-query";
-import { authApi } from "../../api";
-import { authSlice } from "../../model/auth.slice";
-import axios from "axios";
+import { authApi } from "../api";
+import { authSlice } from "./auth.slice";
 import { ROUTES } from "@/shared/constants/routes";
+import axios from "axios";
 
-export const signInThunk =
+export const signUpThunk =
   ({ email, password }: { email: string; password: string }): AppThunk =>
   async (dispatch, _, { router }) => {
-    console.log("router", router.state.location.state?.from);
-
     try {
       const user = await new MutationObserver(queryClient, {
-        mutationKey: ["login"],
-        mutationFn: authApi.login,
+        mutationKey: ["registration"],
+        mutationFn: authApi.registration,
       }).mutate({ email, password });
-
-      console.log("user", user);
 
       if (user) {
         dispatch(authSlice.actions.addUser({ user: user.data.user }));
@@ -25,27 +21,26 @@ export const signInThunk =
 
       queryClient.setQueryData(authApi.checkAuthQueryOptions().queryKey, user);
       localStorage.setItem("token", user.data.accessToken);
-      await router.navigate(router.state.location.state?.from || ROUTES.HOME);
+      await router.navigate(ROUTES.HOME);
     } catch (e) {
       console.log(e);
     }
   };
 
-export const useSignInLoading = () => {
+export const useSignUpLoading = () => {
   const mutations = useMutationState({
-    filters: { mutationKey: ["login"] },
-    // select: (mutation) => mutation.state.status
-  });
-  return mutations.some((mutation) => mutation.status === "pending");
-};
-
-export const useSignInError = () => {
-  const mutations = useMutationState({
-    filters: { mutationKey: ["login"] },
+    filters: { mutationKey: ["registration"] },
     // select: (mutation) => mutation.state.error
   });
 
-  console.log("mutations", mutations);
+  return mutations.some((mutation) => mutation.status === "pending");
+};
+
+export const useSignUpError = () => {
+  const mutations = useMutationState({
+    filters: { mutationKey: ["registration"] },
+    // select: (mutation) => mutation.state.error
+  });
 
   const error = mutations[mutations.length - 1]?.error;
 

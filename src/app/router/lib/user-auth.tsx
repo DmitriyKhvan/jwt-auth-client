@@ -6,8 +6,8 @@ export function UserAuth({ children }: { children: React.ReactNode }) {
   const user = useAppSelector(authSlice.selectors.user);
 
   if (!user?.roles.includes("USER")) {
-    throw new Error('No access rights');
+    throw new Error("No access rights");
   }
 
-  return children
+  return children;
 }

@@ -1,11 +1,11 @@
 import { queryClient } from "@/shared/api/query-client";
 import type { AppThunk } from "@/shared/redux";
-import { authApi } from "../../api";
 import { MutationObserver } from "@tanstack/react-query";
-import { authSlice } from "../../model/auth.slice";
+import { authApi } from "../api";
+import { authSlice } from "./auth.slice";
 import { ROUTES } from "@/shared/constants/routes";
 
-export const logoutThunk =
+export const signOutThunk =
   (): AppThunk =>
   async (dispatch, _, { router }) => {
     await new MutationObserver(queryClient, {

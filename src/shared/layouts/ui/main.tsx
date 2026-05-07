@@ -1,7 +1,12 @@
-import { LogoutButton } from "@/features/auth/logout/ui/logout-button";
-import { NavLink, Outlet } from "react-router";
+import { SignOutButton } from "@/features/auth/ui/sign-out-button";
+import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
+import { NavLink, Outlet, useNavigation } from "react-router";
 
 export const MainLayout = () => {
+  const navigation = useNavigation();
+
+  const isLoading = navigation.state === "loading";
+
   return (
     <>
       <header className="sticky top-0 w-full px-10 py-3 shadow-md z-50 bg-gray-900">
@@ -40,12 +45,12 @@ export const MainLayout = () => {
               </li>
             </ul>
 
-            <LogoutButton />
+            <SignOutButton />
           </div>
         </nav>
       </header>
       <main className="min-h-[calc(100vh-96px)] px-10 py-3">
-        <Outlet />
+        {isLoading ? <UiPageSpinner /> : <Outlet />}
       </main>
       <footer className="w-full px-10 py-3 shadow-md bg-gray-900 text-white">
         2026
