@@ -1,6 +1,6 @@
-import { useAppDispatch } from "@/shared/redux";
+// import { useAppDispatch } from "@/shared/redux";
 import { UiButton } from "@/shared/ui/ui-button";
-import { signOutThunk } from "../model/sign-out-thunk";
+// import { signOutThunk } from "../model/sign-out-thunk";
 import { useSignOut } from "../model/use-sign-out";
 
 export function SignOutButton() {
