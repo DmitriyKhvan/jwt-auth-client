@@ -2,6 +2,7 @@ import { store } from "@/app/store";
 import { authApi } from "@/features/auth/api";
 import { authSlice } from "@/features/auth/model/auth.slice";
 import { queryClient } from "@/shared/api/query-client";
+import { ROUTES } from "@/shared/constants/routes";
 import type { AxiosError } from "axios";
 import { redirect } from "react-router";
 
@@ -12,7 +13,7 @@ export async function requireAuth() {
     });
 
     if (!data) {
-      throw redirect("/login");
+      throw redirect(ROUTES.SIGN_IN);
     }
 
     localStorage.setItem("token", data.accessToken);

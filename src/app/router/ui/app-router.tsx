@@ -150,14 +150,14 @@ export const router = createBrowserRouter([
         lazy: async () => {
           const [component, require] = await Promise.all([
             import("@/pages/users"),
-            import("@/app/router/lib/user-auth"),
+            import("@/app/router/lib/admin-auth"),
           ]);
 
           return {
             Component: () => (
-              <require.UserAuth>
+              <require.AdminAuth>
                 <component.UsersPage />
-              </require.UserAuth>
+              </require.AdminAuth>
             ),
           };
         },

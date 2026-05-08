@@ -42,7 +42,7 @@ export const ErrorPage = () => {
     return (
       <>
         <div>{error.message}</div>
-        <Link to="/login" state={{ from: location.pathname }}>
+        <Link to={ROUTES.SIGN_IN} state={{ from: location.pathname }}>
           Login
         </Link>
       </>

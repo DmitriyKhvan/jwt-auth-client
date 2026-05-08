@@ -1,4 +1,4 @@
-import { UserList } from "@/widgets/user/user-list/ui/user-list";
+import { UserList } from "@/widgets/user";
 
 export const UsersPage = () => {
   return <UserList />;

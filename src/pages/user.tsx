@@ -1,4 +1,4 @@
-import { UserDetails } from "@/widgets/user/user-details/ui/user-details";
+import { UserDetails } from "@/widgets/user";
 import { useParams } from "react-router";
 
 export const UserPage = () => {

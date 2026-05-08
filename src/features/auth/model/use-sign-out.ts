@@ -13,9 +13,7 @@ export function useSignOut() {
     mutationFn: authApi.logout,
     onSuccess() {
       navigate(ROUTES.SIGN_IN);
-      queryClient.removeQueries();
-      localStorage.removeItem("token");
-      store.dispatch(authSlice.actions.removeUser());
+      useResetSession();
     },
   });
 
@@ -23,4 +21,10 @@ export function useSignOut() {
     isLoading: signOutMutation.isPending,
     signOut: signOutMutation.mutate,
   };
+}
+
+export function useResetSession() {
+  queryClient.removeQueries();
+  localStorage.removeItem("token");
+  store.dispatch(authSlice.actions.removeUser());
 }
