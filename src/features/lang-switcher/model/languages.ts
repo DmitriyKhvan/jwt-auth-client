@@ -1,8 +1,8 @@
 import { LANGUAGES } from "@/shared/constants/languages";
 
-type Language = LANGUAGES;
+type Languages = (typeof LANGUAGES)[keyof typeof LANGUAGES];
 
-export const languages: Record<Language, { nativeName: string }> = {
+export const languages: Record<Languages, { nativeName: string }> = {
   en: { nativeName: "English" },
   ru: { nativeName: "Русский" },
 };
