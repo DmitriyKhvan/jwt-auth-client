@@ -2,8 +2,11 @@ import { SignOutButton } from "@/features/auth";
 import clsx from "clsx";
 import { NavLink } from "react-router";
 import { menu } from "../model/menu";
+import { useTranslation } from "react-i18next";
+import { LangSwitcher } from "@/features/lang-switcher/ui/lang-switcher";
 
 export function Header() {
+  const { t } = useTranslation(["common", "profile"]);
   return (
     <header className="sticky top-0 w-full px-10 py-3 shadow-md z-50 bg-gray-900">
       <nav>
@@ -20,13 +23,17 @@ export function Header() {
                     )
                   }
                 >
-                  {item.name}
+                  {t(item.name)}
                 </NavLink>
               </li>
             ))}
           </ul>
 
-          <SignOutButton />
+          <div>
+            {t("email", { ns: "profile" })}
+            <SignOutButton />
+            <LangSwitcher />
+          </div>
         </div>
       </nav>
     </header>

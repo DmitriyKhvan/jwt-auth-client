@@ -19,7 +19,7 @@ export function UiButton({ className, variant, ...props }: UiButtonProps) {
           secondary:
             "text-white bg-rose-500 hover:bg-rose-600 disabled:opacity-50 shadow shadow-rose-500/30",
           outlined:
-            "border border-slate-300 hover:border-slate-500 disabled:opacity-50",
+            "border border-slate-300 bg-white hover:border-slate-500 disabled:opacity-50",
         }[variant],
         className,
       )}

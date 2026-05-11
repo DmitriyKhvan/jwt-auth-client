@@ -9,7 +9,6 @@ export function SignOutButton() {
 
   return (
     <UiButton
-      className="bg-white"
       variant="outlined"
       disabled={isLoading}
       // onClick={() => dispatch(signOutThunk())}

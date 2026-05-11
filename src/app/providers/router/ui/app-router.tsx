@@ -122,7 +122,7 @@ export const router = createBrowserRouter([
       const [layout, error, require] = await Promise.all([
         import("@/shared/layouts/ui/main"),
         import("@/pages/error"),
-        import("@/app/router/lib/require-auth"),
+        import("@/app/providers/router/lib/require-auth"),
       ]);
       return {
         loader: require.requireAuth, // preloader data
@@ -150,7 +150,7 @@ export const router = createBrowserRouter([
         lazy: async () => {
           const [component, require] = await Promise.all([
             import("@/pages/users"),
-            import("@/app/router/lib/admin-auth"),
+            import("@/app/providers/router/lib/admin-auth"),
           ]);
 
           return {
