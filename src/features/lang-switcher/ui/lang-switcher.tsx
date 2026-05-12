@@ -1,21 +1,17 @@
 import { useTranslation } from "react-i18next";
 import { languages } from "../model/languages";
-import { UiButton } from "@/shared/ui/ui-button";
+import { UiSelectField } from "@/shared/ui/ui-select";
+import { LANGUAGES } from "@/shared/constants/languages";
 
 export function LangSwitcher() {
   const { i18n } = useTranslation();
   return (
     <div>
-      {Object.entries(languages).map(([lng, value]) => (
-        <UiButton
-          variant="outlined"
-          key={lng}
-          onClick={() => i18n.changeLanguage(lng)}
-          disabled={i18n.resolvedLanguage === lng}
-        >
-          {value.nativeName}
-        </UiButton>
-      ))}
+      <UiSelectField
+        options={languages}
+        defaultValue={i18n.resolvedLanguage || LANGUAGES.EN}
+        onValueChange={(value) => i18n.changeLanguage(value)}
+      />
     </div>
   );
 }

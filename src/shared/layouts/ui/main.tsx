@@ -9,12 +9,12 @@ export const MainLayout = () => {
   const isLoading = navigation.state === "loading";
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen justify-between">
       <Header />
-      <main className="min-h-[calc(100vh-96px)] px-10 py-3">
+      <main className="grow px-10 py-3">
         {isLoading ? <UiPageSpinner /> : <Outlet />}
       </main>
       <Footer />
-    </>
+    </div>
   );
 };

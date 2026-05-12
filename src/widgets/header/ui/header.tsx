@@ -9,8 +9,8 @@ export function Header() {
   const { t } = useTranslation(["common", "profile"]);
   return (
     <header className="sticky top-0 w-full px-10 py-3 shadow-md z-50 bg-gray-900">
-      <nav>
-        <div className="mx-auto flex justify-between items-center">
+      <div className="mx-auto flex justify-between items-center">
+        <nav>
           <ul className="flex gap-6">
             {menu.map((item) => (
               <li key={item.name}>
@@ -28,14 +28,13 @@ export function Header() {
               </li>
             ))}
           </ul>
+        </nav>
 
-          <div>
-            {t("email", { ns: "profile" })}
-            <SignOutButton />
-            <LangSwitcher />
-          </div>
+        <div className="flex justify-center items-center gap-2">
+          <LangSwitcher />
+          <SignOutButton />
         </div>
-      </nav>
+      </div>
     </header>
   );
 }

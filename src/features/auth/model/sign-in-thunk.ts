@@ -1,10 +1,11 @@
 import { queryClient } from "@/shared/api/query-client";
 import type { AppThunk } from "@/shared/redux";
 import { MutationObserver, useMutationState } from "@tanstack/react-query";
-import { authApi } from "../api";
-import { authSlice } from "./auth.slice";
+
 import axios from "axios";
 import { ROUTES } from "@/shared/constants/routes";
+import { authApi } from "../api";
+import { authSlice } from "./auth.slice";
 
 export const signInThunk =
   ({ email, password }: { email: string; password: string }): AppThunk =>
