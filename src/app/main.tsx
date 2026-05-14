@@ -10,13 +10,14 @@ import "./providers/i18n/config/i18n.ts";
 
 import { router } from "./providers/router/ui/app-router.tsx";
 import "./index.css";
+import { UiPageSpinner } from "@/shared/ui/ui-page-spinner.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <Provider store={store}>
-        <Suspense fallback="loading...">
+        <Suspense fallback={<UiPageSpinner />}>
           <RouterProvider router={router} />
         </Suspense>
       </Provider>

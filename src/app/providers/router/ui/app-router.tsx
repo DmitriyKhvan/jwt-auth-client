@@ -7,174 +7,93 @@ import {
 import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
 import { ROUTES } from "@/shared/constants/routes";
 
-// export const router = createBrowserRouter(
-//   createRoutesFromElements([
-//     <Route
-//       path="/login"
-//       HydrateFallback={() => <div>Loading...</div>}
-//       lazy={async () => {
-//         const module = await import("@/shared/layouts/ui/auth");
-//         return { Component: module.AuthLayout };
-//       }}
-//     >
-//       <Route
-//         index
-//         lazy={async () => {
-//           const module = await import("@/pages/login");
-//           return { Component: module.LoginPage };
-//         }}
-//       />
-//     </Route>,
-
-//     <Route
-//       path="/"
-//       HydrateFallback={() => <div>Loading...</div>}
-//       lazy={async () => {
-//         const [layout, error, require] = await Promise.all([
-//           import("@/shared/layouts/ui/main"),
-//           import("@/pages/error"),
-//           import("@/app/router/lib/require-auth")
-//         ]);
-//         return {
-//           loader: require.requireAuth, // preloader data
-//           Component: layout.MainLayout, // main layout
-//           errorElement: <error.ErrorPage /> // error page
-//         };
-//       }}
-//     >
-//       <Route
-//         index
-//         lazy={async () => {
-//           const module = await import("@/pages/home");
-//           return { Component: module.HomePage };
-//         }}
-//       />
-//       <Route
-//         path="about"
-//         lazy={async () => {
-//           const module = await import("@/pages/about");
-//           return { Component: module.AboutPage };
-//         }}
-//       />
-
-//       <Route
-//         path="users"
-//         lazy={async () => {
-//           const module = await import("@/pages/users");
-//           return {
-//             Component: () => (
-//               <UserAuth>
-//                 <module.UsersPage />
-//               </UserAuth>
-//             )
-//           };
-//         }}
-//       />
-//       <Route
-//         path="users/:id"
-//         lazy={async () => {
-//           const module = await import("@/pages/user");
-//           return { Component: module.UserPage };
-//         }}
-//       />
-//       <Route
-//         path="*"
-//         lazy={async () => {
-//           const module = await import("@/pages/not-found");
-//           return { Component: module.NotFoundPage };
-//         }}
-//       />
-//     </Route>
-//   ])
-// );
+import { AuthLayout, MainLayout } from "@/shared/layouts";
+import { requireAuth } from "../lib/require-auth";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    HydrateFallback: () => <UiPageSpinner />,
-
-    lazy: async () => {
-      const module = await import("@/shared/layouts/ui/auth");
-      return { Component: module.AuthLayout };
-    },
-    children: [
-      {
-        path: ROUTES.SIGN_IN,
-        lazy: async () => {
-          const module = await import("@/pages/sing-in");
-          return { Component: module.LoginPage };
-        },
-      },
-      {
-        path: ROUTES.SIGN_UP,
-        lazy: async () => {
-          const module = await import("@/pages/sign-up");
-          return { Component: module.SignUpPage };
-        },
-      },
-    ],
-  },
-
-  {
-    path: "/",
+    // element: <RootLayout />,
     HydrateFallback: () => <UiPageSpinner />,
     lazy: async () => {
-      const [layout, error, require] = await Promise.all([
-        import("@/shared/layouts/ui/main"),
-        import("@/pages/error"),
-        import("@/app/providers/router/lib/require-auth"),
-      ]);
+      const error = await import("@/pages/error");
       return {
-        loader: require.requireAuth, // preloader data
-        Component: layout.MainLayout, // main layout
-        ErrorBoundary: error.ErrorPage, // error page
+        errorElement: <error.ErrorPage />,
       };
     },
-    children: [
-      {
-        index: true,
-        lazy: async () => {
-          const module = await import("@/pages/home");
-          return { Component: module.HomePage };
-        },
-      },
-      {
-        path: ROUTES.ABOUT,
-        lazy: async () => {
-          const module = await import("@/pages/about");
-          return { Component: module.AboutPage };
-        },
-      },
-      {
-        path: ROUTES.USERS,
-        lazy: async () => {
-          const [component, require] = await Promise.all([
-            import("@/pages/users"),
-            import("@/app/providers/router/lib/admin-auth"),
-          ]);
 
-          return {
-            Component: () => (
-              <require.AdminAuth>
-                <component.UsersPage />
-              </require.AdminAuth>
-            ),
-          };
-        },
+    children: [
+      // public
+      {
+        element: <AuthLayout />,
+        children: [
+          {
+            path: ROUTES.SIGN_IN,
+            lazy: async () => {
+              const module = await import("@/pages/sing-in");
+              return { Component: module.LoginPage };
+            },
+          },
+          {
+            path: ROUTES.SIGN_UP,
+            lazy: async () => {
+              const module = await import("@/pages/sign-up");
+              return { Component: module.SignUpPage };
+            },
+          },
+        ],
       },
       {
-        path: ROUTES.USER,
-        lazy: async () => {
-          const module = await import("@/pages/user");
-          return { Component: module.UserPage };
-        },
-      },
-      {
-        path: "*",
-        lazy: async () => {
-          const module = await import("@/pages/not-found");
-          return { Component: module.NotFoundPage };
-        },
+        element: <MainLayout />,
+        loader: async () => requireAuth(),
+        children: [
+          {
+            index: true,
+            HydrateFallback: () => <UiPageSpinner />,
+            lazy: async () => {
+              const module = await import("@/pages/home");
+              return { Component: module.HomePage };
+            },
+          },
+          {
+            path: ROUTES.ABOUT,
+            lazy: async () => {
+              const module = await import("@/pages/about");
+              return { Component: module.AboutPage };
+            },
+          },
+          {
+            path: ROUTES.USERS,
+            lazy: async () => {
+              const [component, require] = await Promise.all([
+                import("@/pages/users"),
+                import("@/app/providers/router/lib/admin-auth"),
+              ]);
+
+              return {
+                Component: () => (
+                  <require.AdminAuth>
+                    <component.UsersPage />
+                  </require.AdminAuth>
+                ),
+              };
+            },
+          },
+          {
+            path: ROUTES.USER,
+            lazy: async () => {
+              const module = await import("@/pages/user");
+              return { Component: module.UserPage };
+            },
+          },
+          {
+            path: "*",
+            lazy: async () => {
+              const module = await import("@/pages/not-found");
+              return { Component: module.NotFoundPage };
+            },
+          },
+        ],
       },
     ],
   },

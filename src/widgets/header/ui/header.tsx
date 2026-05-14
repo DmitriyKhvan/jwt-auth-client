@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { NavLink } from "react-router";
 import { menu } from "../model/menu";
 import { useTranslation } from "react-i18next";
-import { LangSwitcher } from "@/features/lang-switcher/ui/lang-switcher";
+import { LangSwitcher } from "@/features/lang-switcher";
 
 export function Header() {
   const { t } = useTranslation(["common", "profile"]);

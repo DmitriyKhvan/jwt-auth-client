@@ -61,7 +61,7 @@ export function UiSelectField({
             </Select.ScrollUpButton>
             <Select.Viewport className="p-[5px]">
               {options?.map((option, index) => (
-                <>
+                <React.Fragment key={option.value}>
                   <Select.Group>
                     <SelectItem value={option.value}>{option.label}</SelectItem>
                   </Select.Group>
@@ -69,7 +69,7 @@ export function UiSelectField({
                   {index % 2 === 0 && (
                     <Select.Separator className="m-[5px] h-px bg-teal-500" />
                   )}
-                </>
+                </React.Fragment>
               ))}
             </Select.Viewport>
             <Select.ScrollDownButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-teal-600">

@@ -16,17 +16,28 @@ export const signInThunk =
       const user = await new MutationObserver(queryClient, {
         mutationKey: ["login"],
         mutationFn: authApi.login,
+        onSuccess: async (user) => {
+          await router.navigate(
+            router.state.location.state?.from || ROUTES.HOME,
+          );
+          dispatch(authSlice.actions.addUser({ user: user.data.user }));
+          queryClient.setQueryData(
+            authApi.checkAuthQueryOptions().queryKey,
+            user,
+          );
+          localStorage.setItem("token", user.data.accessToken);
+        },
       }).mutate({ email, password });
 
-      console.log("user", user);
-
-      if (user) {
-        dispatch(authSlice.actions.addUser({ user: user.data.user }));
-      }
-
-      queryClient.setQueryData(authApi.checkAuthQueryOptions().queryKey, user);
-      localStorage.setItem("token", user.data.accessToken);
-      await router.navigate(router.state.location.state?.from || ROUTES.HOME);
+      // if (user) {
+      //   dispatch(authSlice.actions.addUser({ user: user.data.user }));
+      //   queryClient.setQueryData(
+      //     authApi.checkAuthQueryOptions().queryKey,
+      //     user,
+      //   );
+      //   localStorage.setItem("token", user.data.accessToken);
+      //   router.navigate(router.state.location.state?.from || ROUTES.HOME);
+      // }
     } catch (e) {
       console.log(e);
     }

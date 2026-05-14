@@ -6,12 +6,10 @@ import { LANGUAGES } from "@/shared/constants/languages";
 export function LangSwitcher() {
   const { i18n } = useTranslation();
   return (
-    <div>
-      <UiSelectField
-        options={languages}
-        defaultValue={i18n.resolvedLanguage || LANGUAGES.EN}
-        onValueChange={(value) => i18n.changeLanguage(value)}
-      />
-    </div>
+    <UiSelectField
+      options={languages}
+      defaultValue={i18n.resolvedLanguage || LANGUAGES.EN}
+      onValueChange={(value) => i18n.changeLanguage(value)}
+    />
   );
 }

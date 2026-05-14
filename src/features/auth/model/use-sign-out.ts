@@ -3,8 +3,8 @@ import { useNavigate } from "react-router";
 import { authApi } from "../api";
 import { ROUTES } from "@/shared/constants/routes";
 import { queryClient } from "@/shared/api/query-client";
-import { store } from "@/app/store";
 import { authSlice } from "./auth.slice";
+import { useAppDispatch } from "@/shared/redux";
 
 export function useSignOut() {
   const navigate = useNavigate();
@@ -24,7 +24,8 @@ export function useSignOut() {
 }
 
 export function useResetSession() {
+  const dispatch = useAppDispatch();
   queryClient.removeQueries();
   localStorage.removeItem("token");
-  store.dispatch(authSlice.actions.removeUser());
+  dispatch(authSlice.actions.removeUser());
 }

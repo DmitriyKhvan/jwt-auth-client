@@ -13,6 +13,7 @@ export const MainLayout = () => {
       <Header />
       <main className="grow px-10 py-3">
         {isLoading ? <UiPageSpinner /> : <Outlet />}
+        {/* <Outlet /> */}
       </main>
       <Footer />
     </div>
