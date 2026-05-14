@@ -88,7 +88,7 @@ export const CustomButtonProps: Story = {
   args: {
     buttonProps: {
       disabled: true,
-    },
+    } as React.HTMLAttributes<HTMLButtonElement>,
   },
   render: (args) => {
     const [value, setValue] = useState(args.defaultValue);

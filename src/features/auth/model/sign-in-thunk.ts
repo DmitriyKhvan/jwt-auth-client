@@ -13,7 +13,7 @@ export const signInThunk =
     console.log("router", router.state.location.state?.from);
 
     try {
-      const user = await new MutationObserver(queryClient, {
+      await new MutationObserver(queryClient, {
         mutationKey: ["login"],
         mutationFn: authApi.login,
         onSuccess: async (user) => {
@@ -28,16 +28,6 @@ export const signInThunk =
           localStorage.setItem("token", user.data.accessToken);
         },
       }).mutate({ email, password });
-
-      // if (user) {
-      //   dispatch(authSlice.actions.addUser({ user: user.data.user }));
-      //   queryClient.setQueryData(
-      //     authApi.checkAuthQueryOptions().queryKey,
-      //     user,
-      //   );
-      //   localStorage.setItem("token", user.data.accessToken);
-      //   router.navigate(router.state.location.state?.from || ROUTES.HOME);
-      // }
     } catch (e) {
       console.log(e);
     }
