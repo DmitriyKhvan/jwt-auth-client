@@ -1,4 +1,4 @@
-import React, { useId, type HTMLAttributes } from "react";
+import React, { useId } from "react";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import {
@@ -18,7 +18,10 @@ export type UiSelectFieldProps = {
   className?: string;
   label?: string;
   error?: string;
-  buttonProps?: HTMLAttributes<HTMLButtonElement>;
+  placeholder?: string;
+  ariaLabel?: string;
+  disabled?: boolean;
+  buttonProps?: React.ComponentPropsWithoutRef<"button">;
   options?: UiSelectOption[];
 };
 
@@ -28,6 +31,9 @@ export function UiSelectField({
   className,
   label,
   error,
+  placeholder = "Select...",
+  ariaLabel,
+  disabled,
   options,
   buttonProps,
 }: UiSelectFieldProps) {
@@ -39,14 +45,18 @@ export function UiSelectField({
           {label}
         </label>
       )}
-      <Select.Root defaultValue={defaultValue} onValueChange={onValueChange}>
+      <Select.Root
+        defaultValue={defaultValue}
+        onValueChange={onValueChange}
+        disabled={disabled}
+      >
         <Select.Trigger
-          className="inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white px-[15px] text-[13px] leading-none text-teal-600 shadow-[0_2px_10px] shadow-black/10 outline-none hover:bg-gray-700 focus:shadow-[0_0_0_2px] focus:shadow-black data-[placeholder]:text-teal-600"
-          aria-label="Languages"
+          className="inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white px-[15px] text-[13px] leading-none text-teal-600 shadow-[0_2px_10px] shadow-black/10 outline-none hover:bg-gray-100 focus:shadow-[0_0_0_2px] focus:shadow-black data-[placeholder]:text-teal-600"
+          aria-label={ariaLabel}
           id={id}
           {...buttonProps}
         >
-          <Select.Value placeholder="Select language" />
+          <Select.Value placeholder={placeholder} />
           <Select.Icon className="text-teal-600">
             <ChevronDownIcon />
           </Select.Icon>
@@ -62,9 +72,7 @@ export function UiSelectField({
             <Select.Viewport className="p-[5px]">
               {options?.map((option, index) => (
                 <React.Fragment key={option.value}>
-                  <Select.Group>
-                    <SelectItem value={option.value}>{option.label}</SelectItem>
-                  </Select.Group>
+                  <SelectItem value={option.value}>{option.label}</SelectItem>
 
                   {index % 2 === 0 && (
                     <Select.Separator className="m-[5px] h-px bg-teal-500" />

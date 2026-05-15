@@ -1,9 +1,5 @@
 import { extra } from "@/app/store";
-import {
-  // Route,
-  createBrowserRouter,
-  // createRoutesFromElements
-} from "react-router";
+import { createBrowserRouter } from "react-router";
 import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
 import { ROUTES } from "@/shared/constants/routes";
 
@@ -13,7 +9,6 @@ import { requireAuth } from "../lib/require-auth";
 export const router = createBrowserRouter([
   {
     path: "/",
-    // element: <RootLayout />,
     HydrateFallback: () => <UiPageSpinner />,
     lazy: async () => {
       const error = await import("@/pages/error");
@@ -30,8 +25,8 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.SIGN_IN,
             lazy: async () => {
-              const module = await import("@/pages/sing-in");
-              return { Component: module.LoginPage };
+              const module = await import("@/pages/sign-in");
+              return { Component: module.SignInPage };
             },
           },
           {
@@ -65,16 +60,16 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.USERS,
             lazy: async () => {
-              const [component, require] = await Promise.all([
+              const [component, adminOnly] = await Promise.all([
                 import("@/pages/users"),
                 import("@/app/providers/router/lib/admin-auth"),
               ]);
 
               return {
                 Component: () => (
-                  <require.AdminAuth>
+                  <adminOnly.AdminAuth>
                     <component.UsersPage />
-                  </require.AdminAuth>
+                  </adminOnly.AdminAuth>
                 ),
               };
             },
@@ -86,14 +81,14 @@ export const router = createBrowserRouter([
               return { Component: module.UserPage };
             },
           },
-          {
-            path: "*",
-            lazy: async () => {
-              const module = await import("@/pages/not-found");
-              return { Component: module.NotFoundPage };
-            },
-          },
         ],
+      },
+      {
+        path: ROUTES.NOTFOUND,
+        lazy: async () => {
+          const module = await import("@/pages/not-found");
+          return { Component: module.NotFoundPage };
+        },
       },
     ],
   },

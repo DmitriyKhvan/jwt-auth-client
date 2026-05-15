@@ -8,10 +8,7 @@ import {
 
 export const ErrorPage = () => {
   const error = useRouteError();
-  console.log("error", error);
   const location = useLocation();
-
-  console.log("location", location);
 
   if (isRouteErrorResponse(error)) {
     console.log("error", error);

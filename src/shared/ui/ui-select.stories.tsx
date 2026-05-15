@@ -9,6 +9,7 @@ const meta: Meta<typeof UiSelectField> = {
   tags: ["autodocs"],
   args: {
     label: "Language",
+    placeholder: "Choose a framework...",
     defaultValue: "react",
     options: [
       { value: "react", label: "React" },
@@ -84,11 +85,28 @@ export const WithoutLabel: Story = {
   },
 };
 
-export const CustomButtonProps: Story = {
+export const WithDisabled: Story = {
   args: {
-    buttonProps: {
-      disabled: true,
-    } as React.HTMLAttributes<HTMLButtonElement>,
+    disabled: true,
+  },
+  render: (args) => {
+    const [value, setValue] = useState(args.defaultValue);
+
+    return (
+      <div className="w-[250px]">
+        <UiSelectField
+          {...args}
+          defaultValue={value}
+          onValueChange={setValue}
+        />
+      </div>
+    );
+  },
+};
+
+export const CustomPlaceholder: Story = {
+  args: {
+    placeholder: "Pick one...",
   },
   render: (args) => {
     const [value, setValue] = useState(args.defaultValue);
