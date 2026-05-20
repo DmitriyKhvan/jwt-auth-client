@@ -66,7 +66,7 @@ test.describe("Public Pages", () => {
     expect(response).not.toBeNull();
 
     // Проверяем, что страница отобразилась (текст NotFoundPage)
-    const body = await page.textContent("body");
-    expect(body).toContain("NotFoundPage");
+    // Используем getByText с toBeVisible для авто-ожидания рендера ленивого компонента
+    await expect(page.getByText("NotFoundPage")).toBeVisible();
   });
 });
