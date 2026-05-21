@@ -1,4 +1,4 @@
-import { type Page, type Locator } from "@playwright/test";
+import { type Page, type Locator, expect } from "@playwright/test";
 import { ROUTES } from "../../src/shared/constants/routes";
 
 // UsersPage — Page Object Model для страницы списка пользователей /users
@@ -25,6 +25,8 @@ export class UsersPage {
   }
 
   async clickUser(index: number = 0) {
+    // Проверяем, что элемент видим
+    await expect(this.userCards.nth(index)).toBeVisible();
     // Кликаем по n-му пользователю в списке
     await this.userCards.nth(index).click();
   }
