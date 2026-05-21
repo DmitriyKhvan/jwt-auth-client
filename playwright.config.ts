@@ -8,7 +8,7 @@ export default defineConfig({
   testDir: "./e2e",
 
   // fullyParallel — запускать все тесты параллельно (каждый тест в своём worker'е)
-  fullyParallel: true,
+  fullyParallel: false,
 
   // forbidOnly — запретить использование test.only в CI (чтобы случайно не запустить только один тест)
   forbidOnly: !!process.env.CI,
@@ -56,6 +56,6 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
 
     // timeout — максимальное время ожидания запуска сервера (30 секунд)
-    timeout: 30000,
+    timeout: 50000,
   },
 });
