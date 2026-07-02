@@ -1,11 +1,11 @@
 import React, { useId } from "react";
 import * as Select from "@radix-ui/react-select";
-import clsx from "clsx";
 import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
+import { twMerge } from "tailwind-merge";
 
 export type UiSelectOption = {
   value: string;
@@ -39,7 +39,7 @@ export function UiSelectField({
 }: UiSelectFieldProps) {
   const id = useId();
   return (
-    <div className={clsx("flex flex-col gap-1", className)}>
+    <div className={twMerge("flex flex-col gap-1", className)}>
       {label && (
         <label htmlFor={id} className="block">
           {label}
@@ -98,7 +98,7 @@ const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
   ({ children, className, ...props }, forwardedRef) => {
     return (
       <Select.Item
-        className={clsx(
+        className={twMerge(
           "relative flex h-[25px] select-none items-center rounded-[3px] pl-[25px] pr-[35px] text-[13px] leading-none text-teal-600 data-[disabled]:pointer-events-none data-[highlighted]:bg-teal-100 data-[disabled]:text-teal-900 data-[highlighted]:text-teal-900 data-[highlighted]:outline-none",
           className,
         )}

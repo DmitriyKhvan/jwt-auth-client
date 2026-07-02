@@ -7,6 +7,18 @@ import { useAppDispatch } from "@/shared/redux";
 import { authSlice } from "./auth.slice";
 import { queryClient } from "@/shared/api/query-client";
 import axios from "axios";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+import { emailSchema, passwordSchema } from "./schemas";
+
+const TOKEN = "token";
+
+const formSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema,
+});
+
+type FormState = z.input<typeof formSchema>;
 
 export function useSignIn() {
   const navigate = useNavigate();
@@ -17,10 +29,7 @@ export function useSignIn() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{
-    email: string;
-    password: string;
-  }>();
+  } = useForm<FormState>({ resolver: zodResolver(formSchema) });
 
   const signInMutation = useMutation({
     mutationFn: authApi.login,
@@ -28,7 +37,7 @@ export function useSignIn() {
     async onSuccess(user) {
       queryClient.setQueryData(authApi.checkAuthQueryOptions().queryKey, user);
       dispatch(authSlice.actions.addUser({ user: user.data.user }));
-      localStorage.setItem("token", user.data.accessToken);
+      localStorage.setItem(TOKEN, user.data.accessToken);
       await navigate(location.state?.from || ROUTES.HOME);
     },
   });

@@ -45,7 +45,7 @@ export function SignInForm() {
           error={errors.email?.message && tAuth(errors.email?.message)}
           inputProps={{
             type: "email",
-            ...register("email", { required: "Email is required" }),
+            ...register("email"),
           }}
         />
 
@@ -54,14 +54,14 @@ export function SignInForm() {
           error={errors.password?.message && tAuth(errors.password?.message)}
           inputProps={{
             type: "password",
-            ...register("password", { required: "Password is required" }),
+            ...register("password"),
           }}
         />
 
         <UiButton disabled={isLoading} variant="primary">
           {tAuth("Sign In")}
         </UiButton>
-        <UiLink className="text-center text-lime-500!" to={ROUTES.SIGN_UP}>
+        <UiLink className="text-center text-lime-500" to={ROUTES.SIGN_UP}>
           {tAuth("Sign Up")}
         </UiLink>
 

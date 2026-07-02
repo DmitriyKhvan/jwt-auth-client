@@ -1,9 +1,9 @@
 import { SignOutButton } from "@/features/auth";
-import clsx from "clsx";
 import { NavLink } from "react-router";
 import { menu } from "../model/menu";
 import { useTranslation } from "react-i18next";
 import { LangSwitcher } from "@/features/lang-switcher";
+import { twMerge } from "tailwind-merge";
 
 export function Header() {
   const { t } = useTranslation(["common", "profile"]);
@@ -17,7 +17,7 @@ export function Header() {
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
-                    clsx(
+                    twMerge(
                       "text-white hover:underline",
                       isActive ? "underline" : "",
                     )
