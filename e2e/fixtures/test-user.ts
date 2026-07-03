@@ -4,10 +4,10 @@
 // (см. src/shared/constants/roles.ts и admin-auth.tsx)
 export const TEST_USER = {
   email: "user@mail.ru", // Email для входа в тестах
-  password: "12345", // Пароль для входа в тестах
+  password: "123456Q", // Пароль для входа в тестах
 };
 
 export const TEST_ADMIN = {
   email: "admin@mail.ru", // Email для входа в тестах
-  password: "12345", // Пароль для входа в тестах
+  password: "123456Q", // Пароль для входа в тестах
 };

@@ -48,7 +48,7 @@ export const CustomText: Story = {
 
 export const WithCustomClass: Story = {
   args: {
-    className: "text-red-500!",
+    className: "text-red-500",
     children: "Custom styled link",
   },
 };

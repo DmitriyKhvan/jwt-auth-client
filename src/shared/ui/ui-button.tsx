@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import type { HTMLAttributes } from "react";
+import { twMerge } from "tailwind-merge";
 
 type UiButtonVariant = "primary" | "secondary" | "outlined";
 export type UiButtonProps = {
@@ -11,7 +11,7 @@ export function UiButton({ className, variant, ...props }: UiButtonProps) {
   return (
     <button
       {...props}
-      className={clsx(
+      className={twMerge(
         "px-4 h-10 rounded cursor-pointer flex gap-2 items-center justify-center",
         {
           primary:
