@@ -9,6 +9,7 @@ export class SignUpPage {
   readonly page: Page; // Ссылка на страницу браузера
   readonly emailInput: Locator; // Поле ввода email
   readonly passwordInput: Locator; // Поле ввода пароля
+  readonly confirmPasswordInput: Locator; // Поле подтверждения пароля
   readonly submitButton: Locator; // Кнопка отправки формы "Sign Up"
   readonly errorBlock: Locator; // Блок с сообщением об ошибке
   readonly signInLink: Locator; // Ссылка на страницу входа "Sign In"
@@ -18,8 +19,10 @@ export class SignUpPage {
     this.page = page;
     // Ищем поле email через атрибут type="email"
     this.emailInput = page.locator('input[type="email"]');
-    // Ищем поле password через атрибут type="password"
-    this.passwordInput = page.locator('input[type="password"]');
+    // Ищем поле password по атрибуту name="password" (точный выбор из двух полей)
+    this.passwordInput = page.locator('input[name="password"]');
+    // Ищем поле confirmPassword по атрибуту name="confirmPassword"
+    this.confirmPasswordInput = page.locator('input[name="confirmPassword"]');
     // Ищем кнопку "Sign Up" по её роли button и тексту
     this.submitButton = page.getByRole("button", { name: /Sign Up/i });
     // Ищем блок ошибки по CSS-классу bg-rose-500 (красный фон)
@@ -43,15 +46,21 @@ export class SignUpPage {
     await this.passwordInput.fill(password);
   }
 
+  // fillConfirmPassword — заполняет поле подтверждения пароля
+  async fillConfirmPassword(password: string) {
+    await this.confirmPasswordInput.fill(password);
+  }
+
   // clickSubmit — нажимает кнопку "Sign Up"
   async clickSubmit() {
     await this.submitButton.click();
   }
 
-  // signUp — выполняет полный сценарий регистрации: заполняет email, пароль и нажимает Submit
+  // signUp — выполняет полный сценарий регистрации: заполняет email, пароль, подтверждение и нажимает Submit
   async signUp(email: string, password: string) {
     await this.fillEmail(email);
     await this.fillPassword(password);
+    await this.fillConfirmPassword(password);
     await this.clickSubmit();
   }
 
